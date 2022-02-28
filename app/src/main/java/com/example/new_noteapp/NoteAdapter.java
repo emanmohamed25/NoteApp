@@ -1,5 +1,6 @@
 package com.example.new_noteapp;
 
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -10,9 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
-public class NoteAdapter extends FirestoreRecyclerAdapter <NoteAdapter.NoteHolder> {
+public class NoteAdapter extends FirestoreRecyclerAdapter <Note,NoteAdapter.NoteHolder> {
 
-    static Class NoteHolder extends RecyclerView.ViewHolder
+
+
+    static class NoteHolder extends RecyclerView.ViewHolder
 
     {
         TextView textViewTitle;
@@ -20,36 +23,39 @@ public class NoteAdapter extends FirestoreRecyclerAdapter <NoteAdapter.NoteHolde
         TextView textViewPriority;
         public NoteHolder(@NonNull View itemView) {
         super(itemView);
+
+
+            textViewTitle = itemView.findViewById(R.id.text_view_title);
+            textViewDescription = itemView.findViewById(R.id.text_view_description);
+            textViewPriority = itemView.findViewById(R.id.text_view_priority);
+
+        }
+
+
     }
 
 
-        textViewTitle = itemView.findViewById(R.id.text_view_title);
-        textViewDescription = itemView.findViewById(R.id.text_view_description);
-        textViewPriority = itemView.findViewById(R.id.text_view_priority);
-
-    }
-
-
-    /**
-     * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
-     * FirestoreRecyclerOptions} for configuration options.
-     *
-     * @param options
-     */
     public NoteAdapter(@NonNull FirestoreRecyclerOptions<Note> options) {
         super(options);
     }
 
 
     @Override
-    protected void onBindViewHolder(@NonNull NoteAdapter.NoteHolder noteHolder, int i, @NonNull Note note) {
+    protected void onBindViewHolder(@NonNull NoteHolder holder, int position, @NonNull Note model) {
 
+        holder.textViewTitle.setText(model.getTitle());
+        holder.textViewDescription.setText(model.getDescription());
+        holder.textViewPriority.setText(String.valueOf(model.getPriority()));
     }
 
     @NonNull
     @Override
     public NoteAdapter.NoteHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.note_item,parent
+        ,false);
+
+        return new NoteHolder(v);
     }
 }
 

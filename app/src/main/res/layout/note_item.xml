@@ -37,6 +37,6 @@
             android:id="@+id/text_view_description"
             android:layout_alignParentStart="true"
             android:text="Description"
-            android:layout_below="@+id/Text_view_title"/>
+            android:layout_below="@+id/text_view_title"/>
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
