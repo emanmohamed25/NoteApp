@@ -5,6 +5,16 @@ public class Note {
     private String description ;
     private int priority;
 
+    public int getCardviewcolor() {
+        return cardviewcolor;
+    }
+
+    public void setCardviewcolor(int cardviewcolor) {
+        this.cardviewcolor = cardviewcolor;
+    }
+
+    private int cardviewcolor;
+
     public Note()
     {
         // empty constructor needed

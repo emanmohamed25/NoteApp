@@ -3,6 +3,7 @@ package com.example.new_noteapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,11 +15,14 @@ import android.widget.Toast;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Random;
+
 public class NewNoteActivity extends AppCompatActivity {
 
     private EditText editTextTitle;
     private EditText editTextDescription;
     private NumberPicker numberPickerpriority;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +30,8 @@ public class NewNoteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_note);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
 
-        editTextTitle = findViewById(R.id.text_view_title);
-        editTextDescription = findViewById(R.id.text_view_description);
+        editTextTitle = findViewById(R.id.edit_text_title);
+        editTextDescription = findViewById(R.id.edit_text_description);
         numberPickerpriority = findViewById(R.id.number_picker_priority);
 
         numberPickerpriority.setMinValue(1);
@@ -61,6 +65,7 @@ public class NewNoteActivity extends AppCompatActivity {
         String description = editTextDescription.getText().toString();
         int priority = numberPickerpriority.getValue();
 
+
         if (title.trim().isEmpty() || description.trim().isEmpty()) {
 
             Toast.makeText(this, "please insert a title and description", Toast.LENGTH_SHORT).show();
@@ -68,8 +73,9 @@ public class NewNoteActivity extends AppCompatActivity {
         }
 
         CollectionReference notbookRef = FirebaseFirestore.getInstance().collection("Notebook");
-        notbookRef.add(new Note(title,description,priority));
+        notbookRef.add(new Note(title, description, priority));
         Toast.makeText(this, "Note added", Toast.LENGTH_SHORT).show();
+
         finish();
 
     }
